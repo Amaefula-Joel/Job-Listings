@@ -14,12 +14,11 @@ async function jobData() {
     const data = await response.json();
 
     populateJob(data);
-    // console.log(data.length);
-    }
+}
 
 function populateJob(jobs) {
-    const jobsData = jobs.map(function(job){
-    return `<div class="job-item ${job.featured ? "featured" : ""}">
+    const jobsData = jobs.map(function (job) {
+        return `<div class="job-item ${job.featured ? "featured" : ""}">
     <img src="${job.logo}" alt="${job.company}" class="company-image">
 
     <!-- job list content -->
@@ -43,18 +42,18 @@ function populateJob(jobs) {
 
         <!-- job categories -->
         <div class="job-catergories">
-            <button class="btn" type="button">${job.role}</button>
-            <button class="btn" type="button">${job.level}</button>
+            <button class="btn" type="button" data-role="${job.role}">${job.role}</button>
+            <button class="btn" type="button" data-level="${job.level}">${job.level}</button>
             ${job.languages.map(function (language) {
-                return `<button class="btn" type="button">${language}</button>`
-            }).join("\n")}
+                return `<button class="btn" type="button" data-languages="${language}">${language}</button>`
+            }).join("")}
+            ${job.tools.map(function (tool) {
+                return `<button class="btn" type="button" data-tools="${tool}">${tool}</button>`
+            }).join("")}
         </div>
     </div>
     </div>`
     }).join("");
 
     jobContainer.innerHTML = jobsData;
-
 }
-
-
