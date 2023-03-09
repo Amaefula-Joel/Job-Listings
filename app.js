@@ -17,43 +17,12 @@ async function jobData() {
 }
 
 function populateJob(jobs) {
-    const jobsData = jobs.map(function (job) {
-        return `<div class="job-item ${job.featured ? "featured" : ""}">
-    <img src="${job.logo}" alt="${job.company}" class="company-image">
 
-    <!-- job list content -->
-    <div class="job-content">
-        <!-- job details -->
-        <div class="job-title">
-            <div class="heading">
-                <h3 class="company-name">${job.company}</h3>
-                ${job.new ? '<span class="new">new!</span>' : ''}
-                ${job.featured ? '<span class="featured">featured</span>' : ''}
-            </div>
+    const jobTemplate = document.getElementById("jobTemplate").innerHTML;
+    const templateFunc = Handlebars.compile(jobTemplate);
 
-            <h4 class="role">${job.position}</h4>
+    const templateFromJson = jobs.map(templateFunc).join("");
 
-            <div class="job-spec">
-                <span>${job.postedAt}</span>
-                <span>${job.contract}</span>
-                <span>${job.location}</span>
-            </div>
-        </div>
-
-        <!-- job categories -->
-        <div class="job-catergories">
-            <button class="btn" type="button" data-role="${job.role}">${job.role}</button>
-            <button class="btn" type="button" data-level="${job.level}">${job.level}</button>
-            ${job.languages.map(function (language) {
-                return `<button class="btn" type="button" data-languages="${language}">${language}</button>`
-            }).join("")}
-            ${job.tools.map(function (tool) {
-                return `<button class="btn" type="button" data-tools="${tool}">${tool}</button>`
-            }).join("")}
-        </div>
-    </div>
-    </div>`
-    }).join("");
-
-    jobContainer.innerHTML = jobsData;
+    jobContainer.innerHTML = templateFromJson;
+    
 }
